@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% block title %}Account · Harbor Supply{% endblock %}
+{% block main %}
+  <section class="hero narrow">
+    <p class="eyebrow">Anonymous session {{ shopper.sid[:8] }}</p>
+    <h1>Account details</h1>
+    <p class="lede">Saving this form changes where receipts go and where orders ship. The form has no CSRF token.</p>
+    {% if notice %}<p class="notice">{{ notice }}</p>{% endif %}
+  </section>
+  <section class="split">
+    <form method="POST" action="/account/update" class="panel">
+      <label>Display name <input name="name" value="{{ shopper.name }}" maxlength="80"></label>
+      <label>Receipt email <input name="email" type="email" value="{{ shopper.email }}" maxlength="120" placeholder="you@example.com"></label>
+      <label>Shipping address <textarea name="address" maxlength="200" rows="3">{{ shopper.address }}</textarea></label>
+      <button type="submit">Save account</button>
+    </form>
+    <div>
+      <section class="panel">
+        <h2>Orders</h2>
+        <ul class="plain">
+          {% for order in shopper.orders %}
+          <li><span>{{ order.name }}</span><span>${{ order.price }}</span></li>
+          {% else %}
+          <li class="empty">No orders yet.</li>
+          {% endfor %}
+        </ul>
+      </section>
+      <section class="panel">
+        <h2>Change log</h2>
+        <ul class="plain">
+          {% for entry in shopper.log %}
+          <li><span>{{ entry.action }}</span><span>{{ entry.method }} · origin {{ entry.origin }}</span></li>
+          {% else %}
+          <li class="empty">No changes yet.</li>
+          {% endfor %}
+        </ul>
+      </section>
+    </div>
+  </section>
+{% endblock %}

@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block title %}Harbor Supply{% endblock %}
+{% block main %}
+  <section class="hero">
+    <p class="eyebrow">Shopper profile, no password</p>
+    <h1>Your receipt email and shipping address live in this browser.</h1>
+    <p class="lede">There is no account login. A cookie identifies this browser. Orders and the receipt address are saved against that cookie.</p>
+    <p class="status">Signed in as <strong>{{ shopper.name }}</strong>{% if shopper.email %} · receipts to {{ shopper.email }}{% endif %}.</p>
+  </section>
+  <section class="grid">
+    {% for item in catalog %}
+    <article class="card">
+      <p class="sku">{{ item.sku }}</p>
+      <h2>{{ item.name }}</h2>
+      <p>{{ item.note }}</p>
+      <div class="card-row">
+        <strong>${{ item.price }}</strong>
+        <form method="POST" action="/order">
+          <input type="hidden" name="sku" value="{{ item.sku }}">
+          <button type="submit">Place order</button>
+        </form>
+      </div>
+    </article>
+    {% endfor %}
+  </section>
+{% endblock %}

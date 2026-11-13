@@ -1,0 +1,11 @@
+{
+  "name": "csrf-website",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Local lab site with a pre-authentication CSRF flaw and no login.",
+  "scripts": {
+    "start": "node start.js",
+    "shop": "node server.js",
+    "attacker": "node attacker.js"
+  }
+}
